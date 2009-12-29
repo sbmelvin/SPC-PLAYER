@@ -1,0 +1,38 @@
+Super Mario All-Stars
+Dumped by: Datschge, Agustín Huambachano, YK, Tanookirby
+ID666 tags by: Datschge, Agustín Huambachano, YK
+Downloaded from: http://snesmusic.org
+
+Update 1:
+-Two missing jingles added.
+-Two songs redumped without sound effects.
+
+Update 2:
+-Missing song added.
+
+Update 3:
+-Four missing songs added.
+-One song redumped without sound effect.
+
+Update 4:
+-Nintendo logo jingle added.
+
+Update 5:
+-Japanese version of the "Intro Chatter" added.
+-Super Mario Bros. 3 Course Clear jingle redumped
+ without sound effect.
+-Tracknames altered to match the English version.
+-Timers tweaked.
+
+Update 6:
+-All "Hurry Up" variants from Super Mario Bros. 1
+ and 3 added. "Subspace" variant from Super Mario
+ Bros. 2 also added.
+-A few tracknames tweaked.
+-Order completely redone, using a new experimental
+ ordering system:
+
+Tracks starting with 0 are from the Super Mario All-Stars main menu.
+Tracks starting with 1 are from Super Mario Bros. and the Lost Levels
+Tracks starting with 2 are from Super Mario Bros. 2
+Tracks starting with 3 are from Super Mario Bros. 3

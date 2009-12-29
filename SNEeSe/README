@@ -1,0 +1,27 @@
+The code in this directory is either taken directly from SNEeSe, modified
+from SNEeSe, or created by Brad Martin based on SNEeSe code.  As such, all
+code in this directory falls under the SNEeSe license, and not the OpenSPC
+license.  Specifically, these files have been copied verbatim from the
+SNEeSe v0.74 source:
+
+* misc.ni
+* regs.ni
+* spcaddr.ni
+* spcmacro.ni
+* spcops.ni
+
+These files were originally taken from the SNEeSe source and modified for
+use with OpenSPC:
+
+* SPC700.asm
+* spc.ni
+
+These files were independently created but contain some code derived from
+SNEeSe:
+
+* SPCimpl.c
+* SPCimpl.h
+
+For details on the SNEeSe license, read the file 'LICENSE' found in this
+directory.  The original SNEeSe package and documentation may be found at
+http://www.emuunlim.com/sneese/

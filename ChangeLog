@@ -1,0 +1,4 @@
+
+ [11/24/03] [SOAP-0.2]
+ 	Rewrote previous code with new OpenSPC implementation.
+	OpenSPC no longer needed on system (compiled straight into binary)

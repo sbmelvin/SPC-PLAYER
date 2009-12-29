@@ -1,0 +1,15 @@
+[LAZY MAN'S INSTALL / COMPILATION INSTRUCTIONS]
+
+	To compile:
+	%make
+
+	To install: (must be root)
+	%make install
+
+	To uninstall: (must be root)
+	%make uninstall
+
+	soap is installed to /usr/local/bin for those interested.
+
+
+	

@@ -1,0 +1,14 @@
+[All coding of SOAP]
+Stephen Melvin Jr <jinksys444@charter.net>
+
+
+[Various borrowed code]
+SOAP uses some libopenspc code for its SPC decoding,
+libopenspc (as far as i know) was written by Brad Martin.
+<bmartin@umr.edu>
+
+The libopenspc code borrows code from SNEeSe, which can be
+found at http://www.emuunlim.com/sneese/.
+
+If anyone else believes they are to be mentioned here,
+email me at jinksys444@charter.net.
