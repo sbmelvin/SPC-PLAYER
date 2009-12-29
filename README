@@ -1,18 +1,3 @@
-Thank you for your interest in SOAP, or
-"Steve's Own Audio Player".  My future
-goal is to write a player that can
-playback the many different types of
-video game console sound files.
-Some of these include SPC(snes), GYM(genesis),
-NSF(nes) and many others.  At the moment, though,
-SOAP only supports SPC playback.  My idea is to
-focus on one system at a time, perfect playback,
-then move onto another system. So, when I have
-SPC playback rock solid, ID666 read/write implemented,
-playlist support, WAV/mp3 output stable, then I will
-start to implement other systems.
-
-Enjoy!
-
-Steve Melvin Jr
-<jinksys444@charter.net> 
+SOAP is a SPC player.  It was written in 2003 
+(I believe) and at the time compiled on Linux.  
+My intention is to port this utility to OSX.
