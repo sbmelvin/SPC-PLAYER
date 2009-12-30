@@ -1,10 +1,10 @@
 #2003 Stephen Melvin Jr  <jinksys444@charter.net>
 
 NASM = nasm
-AFLAGS = --prefix _ -f macho
+AFLAGS = --prefix _ -f macho 
 CC = gcc
 #CFLAGS = -W -Wall -pedantic -g
-CFLAGS = -W -Wall -pedantic -framework CoreServices -framework AudioToolbox -framework CoreAudio -framework AudioUnit 
+CFLAGS = -m32 -W -Wall -pedantic -framework CoreServices -framework AudioToolbox -framework CoreAudio -framework AudioUnit 
 SPC_IMPL = SNEeSe
 SPCIMPL_OBJS = SNEeSe/SPC700.o SNEeSe/SPCimpl.o
 LIB_OBJS = main.o dsp.o $(SPCIMPL_OBJS)

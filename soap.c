@@ -19,8 +19,10 @@ Version 0.2
 #include <sys/stat.h>
 #include <ctype.h>
 #include <string.h>
-	UInt32	theFormatFlags =  kLinearPCMFormatFlagIsSignedInteger 
-									| kAudioFormatFlagsNativeEndian
+#include <errno.h>
+
+	UInt32	theFormatFlags =  kAudioFormatFlagIsSignedInteger | 
+									kAudioFormatFlagsNativeEndian
 									| kLinearPCMFormatFlagIsPacked
 									| kAudioFormatFlagIsNonInterleaved;
 	UInt32	theBytesPerFrame = 2,theBytesInAPacket = 2;
@@ -37,31 +39,54 @@ Version 0.2
 				void *buf;
 int main(int argc, char *argv[])
 {
+	
 	int fd;
-	char spcFile[]="/Users/jinksys/Core/Programming/soap-0.2/SMAS/smas-318.spc";
+
+	char spcFile[]="/Users/jinksys/Documents/Programming/soap-0.2/SMAS/smas-309.spc";
 	char c;
 	void *ptr;
 	off_t size;
 
 	buf=malloc(32000);
-
+	printf("hey kids!");fflush(stdout);	
 	fd=open(spcFile,O_RDONLY);
-	if(fd<1)
+	if(fd==-1)
 	{
+		perror("open: ");	
 		printf("BNOOM");
+		return 1;
 	}
+	printf("hey kids!");fflush(stdout);	
 	size=lseek(fd,0,SEEK_END);
+	printf("hey kids!");fflush(stdout);	
 	lseek(fd,0,SEEK_SET);
+	printf("hey kids!");fflush(stdout);	
 	ptr=malloc(size);
 		read(fd,ptr,size);
 		close(fd);
+	printf("hey kids!");fflush(stdout);	
 
+		printf("b4 OSPC");
 		fd=OSPC_Init(ptr,size);
 
 		free(ptr);
-		
+	
+	/*	while(1)
+		{
+			size=OSPC_Run(-1,buf,4096);
+			write(STDOUT_FILENO,buf,size);
+			printf("donkies");
+			fflush(stdout);
+
+		}
+	*/
+		printf("b4 init");		
+		fflush(stdout);
 		initAudio();
+		printf("after init");
+		fflush(stdout);
 		playAudio();
+		
 		
 		
 
@@ -132,15 +157,18 @@ OSStatus	MyRenderer(void 				*inRefCon,
 				UInt32 						inNumberFrames, 
 				AudioBufferList 			*ioData)
 {
-
-	int size,channel=1;
-	size=OSPC_Run(-1,buf,inNumberFrames);
-	write(STDOUT_FILENO,buf,size);
+	printf("asking for %d frames\n", inNumberFrames);
+	fflush(stdout);
+	int size,channel=0;
+	size=OSPC_Run(-1,buf,inNumberFrames*2);
+	printf("got %d bytes\n",inNumberFrames*2);
+//	write(STDOUT_FILENO,buf,size);
 	for (channel; channel < ioData->mNumberBuffers; channel++)
 	{
-		memcpy (ioData->mBuffers[channel].mData,buf,inNumberFrames);
+		memcpy (ioData->mBuffers[channel].mData,buf,size);
 	}
 	
+	return noErr;
 }
 
 		void	playAudio()
@@ -158,7 +186,7 @@ OSStatus	MyRenderer(void 				*inRefCon,
 				streamFormat.mBytesPerPacket = theBytesInAPacket;	
 				streamFormat.mFramesPerPacket = 1;	
 				streamFormat.mBytesPerFrame = theBytesPerFrame;		
-				streamFormat.mChannelsPerFrame = 2;	
+				streamFormat.mChannelsPerFrame = 1;	
 				streamFormat.mBitsPerChannel = theBitsPerChannel;	
 			err = AudioUnitSetProperty (gOutputUnit,
 									kAudioUnitProperty_StreamFormat,
@@ -189,8 +217,10 @@ OSStatus	MyRenderer(void 				*inRefCon,
 
 					// we call the CFRunLoopRunInMode to service any notifications that the audio
 					// system has to deal with
-			CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2, false);
-
+			printf("CFLOOP");
+			CFRunLoopRun();
+			//CFRunLoopRunInMode(kCFRunLoopDefaultMode, 20, false);
+			printf("AFCF");
 		// REALLY after you're finished playing STOP THE AUDIO OUTPUT UNIT!!!!!!	
 		// but we never get here because we're running until the process is nuked...	
 			verify_noerr (AudioOutputUnitStop (gOutputUnit));
