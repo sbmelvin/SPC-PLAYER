@@ -1,5 +1,5 @@
-/*Stephen B Melvin Jr, jinksys444@charter.net
-Version 0.2
+/*Stephen B Melvin Jr, <jinksys@gmail.com>
+Version 0.3 OSX Core Audio Version
 */
 
 #include <CoreServices/CoreServices.h>
@@ -20,6 +20,7 @@ Version 0.2
 #include <ctype.h>
 #include <string.h>
 #include <errno.h>
+#include <strings.h>
 
 	UInt32	theFormatFlags =  kAudioFormatFlagIsSignedInteger | 
 									kAudioFormatFlagsNativeEndian
@@ -42,13 +43,13 @@ int main(int argc, char *argv[])
 	
 	int fd;
 
-	char spcFile[]="/Users/jinksys/Documents/Programming/soap-0.2/SMAS/smas-309.spc";
+	char spcFile[]="/Users/jinksys/Documents/Programming/soap-0.2/SMAS/smas-103.spc";
 	char c;
 	void *ptr;
 	off_t size;
 
 	buf=malloc(32000);
-	printf("hey kids!");fflush(stdout);	
+		
 	fd=open(spcFile,O_RDONLY);
 	if(fd==-1)
 	{
@@ -56,17 +57,17 @@ int main(int argc, char *argv[])
 		printf("BNOOM");
 		return 1;
 	}
-	printf("hey kids!");fflush(stdout);	
+		
 	size=lseek(fd,0,SEEK_END);
-	printf("hey kids!");fflush(stdout);	
+		
 	lseek(fd,0,SEEK_SET);
-	printf("hey kids!");fflush(stdout);	
+		
 	ptr=malloc(size);
 		read(fd,ptr,size);
 		close(fd);
-	printf("hey kids!");fflush(stdout);	
+		
 
-		printf("b4 OSPC");
+		//printf("b4 OSPC");
 		fd=OSPC_Init(ptr,size);
 
 		free(ptr);
@@ -80,10 +81,10 @@ int main(int argc, char *argv[])
 
 		}
 	*/
-		printf("b4 init");		
+		//printf("b4 init");		
 		fflush(stdout);
 		initAudio();
-		printf("after init");
+		//printf("after init");
 		fflush(stdout);
 		playAudio();
 		
@@ -97,7 +98,7 @@ int main(int argc, char *argv[])
 
 UInt32 initAudio(void)
 {
-printf("[INIT]\n");
+	//printf("[INIT]\n");
 	OSStatus err = noErr;
 
 	//An AudioUnit is an OS component.
@@ -146,8 +147,8 @@ printf("[INIT]\n");
 								&input, 
 								sizeof(input));
 		if (err) { printf ("AudioUnitSetProperty-CB=%ld\n", (long int)err); return; }
-printf("Got Here");
-fflush(NULL);
+//printf("Got Here");
+//fflush(NULL);
 }
 
 OSStatus	MyRenderer(void 				*inRefCon, 
@@ -157,16 +158,32 @@ OSStatus	MyRenderer(void 				*inRefCon,
 				UInt32 						inNumberFrames, 
 				AudioBufferList 			*ioData)
 {
-	printf("asking for %d frames\n", inNumberFrames);
+//	printf("asking for %d frames\n", inNumberFrames);
 	fflush(stdout);
+	int frame=0;
 	int size,channel=0;
-	size=OSPC_Run(-1,buf,inNumberFrames*2);
-	printf("got %d bytes\n",inNumberFrames*2);
-//	write(STDOUT_FILENO,buf,size);
-	for (channel; channel < ioData->mNumberBuffers; channel++)
+	size=OSPC_Run(-1,buf,inNumberFrames*4);
+	//write(STDOUT_FILENO, buf, size);
+	for(frame; frame<inNumberFrames; ++frame)
 	{
-		memcpy (ioData->mBuffers[channel].mData,buf,size);
+		//bzero(ioData->mBuffers[0].mData, ioData->mBuffers[0].mDataByteSize);
+		//bzero(ioData->mBuffers[1].mData, ioData->mBuffers[1].mDataByteSize);
+		
+		memcpy(ioData->mBuffers[0].mData+(frame*2), buf+(frame*4), 2);
+		memcpy(ioData->mBuffers[1].mData+(frame*2), buf+(frame*4)+2, 2);	
 	}
+	
+	//memcpy(ioData->mBuffers[0].mData, buf, inNumberFrames);
+	//memcpy(ioData->mBuffers[1].mData, buf, inNumberFrames);
+	
+	/*
+	for (channel; channel < ioData->mNumberBuffers; channel++)
+	{	while(frame<inNumberFrames)
+		{
+			ioData->mBuffers[channel].mData[frame
+		}
+		memcpy (ioData->mBuffers[channel].mData,buf,ioData->mBuffers[channel].mDataByteSize);
+	}*/
 	
 	return noErr;
 }
@@ -186,7 +203,7 @@ OSStatus	MyRenderer(void 				*inRefCon,
 				streamFormat.mBytesPerPacket = theBytesInAPacket;	
 				streamFormat.mFramesPerPacket = 1;	
 				streamFormat.mBytesPerFrame = theBytesPerFrame;		
-				streamFormat.mChannelsPerFrame = 1;	
+				streamFormat.mChannelsPerFrame = 2;	
 				streamFormat.mBitsPerChannel = theBitsPerChannel;	
 			err = AudioUnitSetProperty (gOutputUnit,
 									kAudioUnitProperty_StreamFormat,
