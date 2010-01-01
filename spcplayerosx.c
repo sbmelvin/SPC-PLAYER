@@ -1,5 +1,8 @@
-/*Stephen B Melvin Jr, <jinksys@gmail.com>
+/*
+Stephen B Melvin Jr, <jinksys@gmail.com>
 Version 0.3 OSX Core Audio Version
+Usage: ./soap filename.spc
+To exit use Control-C.
 */
 
 #include <CoreServices/CoreServices.h>
@@ -41,20 +44,23 @@ Version 0.3 OSX Core Audio Version
 int main(int argc, char *argv[])
 {
 	
+	if(argc!=2)
+	{
+		printf("Usage: ./spcplayer filename.spc\n");
+		return 1;
+	}
+	
 	int fd;
-
-	char spcFile[]="/Users/jinksys/Documents/Programming/soap-0.2/SMAS/smas-103.spc";
 	char c;
 	void *ptr;
 	off_t size;
 
 	buf=malloc(32000);
 		
-	fd=open(spcFile,O_RDONLY);
+	fd=open(argv[1],O_RDONLY);
 	if(fd==-1)
 	{
-		perror("open: ");	
-		printf("BNOOM");
+		perror(argv[1]);	
 		return 1;
 	}
 		
@@ -129,11 +135,9 @@ UInt32 initAudio(void)
 	    //Finds a component that meets the desc spec's
 	    comp = FindNextComponent(NULL, &desc);
 	    if (comp == NULL) exit (-1);
-		printf("[BeforeOpenAComponent]\n");
 	    //gains access to the services provided by the component
 	    err = OpenAComponent(comp, &gOutputUnit);
 	if (err) { printf ("AudioUnitSetProperty-CB=%ld\n", (long int)err); return; }
-		printf("[OpenAComponent]\n");
 	
 		// Set up a callback function to generate output to the output unit
     	AURenderCallbackStruct input;
@@ -234,10 +238,9 @@ OSStatus	MyRenderer(void 				*inRefCon,
 
 					// we call the CFRunLoopRunInMode to service any notifications that the audio
 					// system has to deal with
-			printf("CFLOOP");
+			printf("\nPress Control-C to stop playback.\n");
 			CFRunLoopRun();
 			//CFRunLoopRunInMode(kCFRunLoopDefaultMode, 20, false);
-			printf("AFCF");
 		// REALLY after you're finished playing STOP THE AUDIO OUTPUT UNIT!!!!!!	
 		// but we never get here because we're running until the process is nuked...	
 			verify_noerr (AudioOutputUnitStop (gOutputUnit));

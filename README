@@ -1,3 +1,5 @@
-SOAP is a SPC player.  It was written in 2003 
-(I believe) and at the time compiled on Linux.  
-My intention is to port this utility to OSX.
+2003,2010 Stephen Bruce Melvin Jr <jinksys@gmail.com>
+SPCPLAYER is a SNES SPC file player for linux and OS X.
+To compile:
+Linux-> make linux
+OSX  -> make osx

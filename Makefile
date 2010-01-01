@@ -1,10 +1,11 @@
-#2003 Stephen Melvin Jr  <jinksys444@charter.net>
+#2003,2010 Stephen Melvin Jr  <jinksys@gmail.com>
 
 NASM = nasm
-AFLAGS = --prefix _ -f macho 
+MAFLAGS = --prefix _ -f macho 
 CC = gcc
 #CFLAGS = -W -Wall -pedantic -g
-CFLAGS = -m32 -W -Wall -pedantic -framework CoreServices -framework AudioToolbox -framework CoreAudio -framework AudioUnit 
+MCFLAGS = -m32 -W -Wall -pedantic -framework CoreServices -framework AudioToolbox -framework CoreAudio -framework AudioUnit 
+LCFLAGS = -Wall -pedantic 
 SPC_IMPL = SNEeSe
 SPCIMPL_OBJS = SNEeSe/SPC700.o SNEeSe/SPCimpl.o
 LIB_OBJS = main.o dsp.o $(SPCIMPL_OBJS)
@@ -15,10 +16,18 @@ INSTALL_LIB_PATH = $(INSTALL_PATH)/lib
 INSTALL_INC_PATH = $(INSTALL_PATH)/include
 
 
-all: soap
+osx: CFLAGS = $(MCFLAGS)
+osx: AFLAGS = $(MAFLAGS)
+osx: SPCPLAYERFILE = spcplayerosx.c
+osx: spcplayer
 
-soap: libopenspc.a
-	gcc $(CFLAGS) soap.c -o soap -lz ./libopenspc.a
+linux: CFLAGS = $(LAFLAGS)
+linux: SPCPLAYERFILE = spcplayerlinux.c
+linux: spcplayer
+
+spcplayer: libopenspc.a $(SPCPLAYERFILE)
+	gcc $(CFLAGS) $(SPCPLAYERFILE) -o spcplayer -lz ./libopenspc.a
+
 
 #install: libopenspc.so openspc.h
 #	mkdir -p $(INSTALL_LIB_PATH) $(INSTALL_INC_PATH)
@@ -48,7 +57,7 @@ SNEeSe/SPC700.o: SNEeSe/SPC700.asm SNEeSe/spc.ni SNEeSe/regs.ni \
 	$(NASM) $(AFLAGS) -iSNEeSe/ -o SNEeSe/SPC700.o SNEeSe/SPC700.asm
 
 clean:
-	rm -f *.o $(SPC_IMPL)/*.o libopenspc.a soap
+	rm -f *.o $(SPC_IMPL)/*.o libopenspc.a soap spcplayer
 
 uninstall:
 	rm -f /usr/local/bin/soap
