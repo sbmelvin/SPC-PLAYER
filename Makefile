@@ -2,6 +2,7 @@
 
 NASM = nasm
 MAFLAGS = --prefix _ -f macho 
+NAFLAGS = -f elf
 CC = gcc
 #CFLAGS = -W -Wall -pedantic -g
 MCFLAGS = -m32 -W -Wall -pedantic -framework CoreServices -framework AudioToolbox -framework CoreAudio -framework AudioUnit 
@@ -21,7 +22,8 @@ osx: AFLAGS = $(MAFLAGS)
 osx: SPCPLAYERFILE = spcplayerosx.c
 osx: spcplayer
 
-linux: CFLAGS = $(LAFLAGS)
+linux: CFLAGS = $(LCFLAGS)
+linux: AFLAGS = $(LAFLAGS)
 linux: SPCPLAYERFILE = spcplayerlinux.c
 linux: spcplayer
 
