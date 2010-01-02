@@ -16,6 +16,16 @@ its license.  See the file 'LICENSE' in this directory for more information.
 #ifndef SPCIMPL_H
 #define SPCIMPL_H
 
+
+#ifdef __APPLE__
+#define ASMCALL "pusha;call __SPC_START;popa"
+#define _SPC_START __SPC_START
+#endif
+
+#ifdef __linux__
+#define ASMCALL "pusha;call _SPC_START;popa"
+#endif
+
 extern unsigned char _SPCRAM[65536],_SPC_DSP[256];
 extern unsigned long __SPC_PC,__SPC_SP,_SPC_Cycles,_TotalCycles,
   _Map_Byte,_Map_Address;
@@ -31,7 +41,7 @@ extern unsigned long _SPC_T0_cycle_latch,_SPC_T1_cycle_latch,
                      _SPC_T2_cycle_latch;
 
 void _Reset_SPC(void);
-void __SPC_START(void);
+void _SPC_START(void);
 unsigned char _get_SPC_PSW(void);
 void SPC_SetState(int pc,int a,int x,int y,int p,int sp,void *ram);
 void _Wrap_SPC_Cyclecounter(void);
@@ -41,7 +51,7 @@ void _Wrap_SPC_Cyclecounter(void);
 	_SPC_Cycles+=(c);\
 	if((signed long)_TotalCycles<0)\
 	    _Wrap_SPC_Cyclecounter();\
-	__asm__("pusha;call __SPC_START;popa");\
+	__asm__(ASMCALL);\
 }
 
 #define SPC_Reset()\
