@@ -9,7 +9,7 @@ That is, it essentially writes to /dev/dsp after setting up the sound system.  I
 I would have used ALSA.  It was tested on Ubuntu 9.10 and the only bug I know of is you don't always get
 a successful opening of /dev/dsp the first try.  Make sure you have zlib devel installed.
 
-The OSX version is my first dip into Core Audio so the code isn't pretty, but it works and works properly.
+The OSX version is my first dip into Core Audio so the code isn't pretty, but it works properly.
 
 Usage on both systems:  ./spcplayer filename.spc
 
