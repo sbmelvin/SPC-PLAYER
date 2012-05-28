@@ -1,4 +1,4 @@
-#2003,2010 Stephen Melvin Jr  <jinksys@gmail.com>
+#2003,2010 Stephen Melvin Jr  <stephenbmelvin@gmail.com>
 
 NASM = nasm
 MAFLAGS = --prefix _ -f macho 

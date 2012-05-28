@@ -1,4 +1,4 @@
-/*Stephen B Melvin Jr, jinksys444@charter.net
+/*Stephen B Melvin Jr, <stephenbmelvin@gmail.com>
 Version 0.2
 */
 
