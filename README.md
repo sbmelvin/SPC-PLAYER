@@ -3,6 +3,7 @@
 
 ##To compile:
 Linux: make linux
+
 OSX  : make osx
 
 The linux version, which was originally written in 2003, uses the old OSS methods for sound output.
