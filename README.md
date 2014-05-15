@@ -1,5 +1,4 @@
-#SPCPLAYER
-##SNES SPC player for Linux and OSX
+###[spcplayer](https://github.com/sbmelvin/SPC-PLAYER): An [.SPC](www.zophar.net/music/spc.html) music player
 
 ###Compilation
 **Linux**
