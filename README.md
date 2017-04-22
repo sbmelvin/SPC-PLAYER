@@ -1,6 +1,7 @@
-###[spcplayer](https://github.com/sbmelvin/SPC-PLAYER): An [.SPC](www.zophar.net/music/spc.html) music player
+## spcplayer
+### An [.SPC](www.zophar.net/music/spc.html) music player
 
-###Compilation
+#### Compilation
 **Linux**
 
     make linux
