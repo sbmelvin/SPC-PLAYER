@@ -2,11 +2,11 @@
 
 NASM = nasm
 MAFLAGS = --prefix _ -f macho 
-NAFLAGS = -f elf
+LAFLAGS = -f elf32
 CC = gcc
 #CFLAGS = -W -Wall -pedantic -g
 MCFLAGS = -m32 -W -Wall -pedantic -framework CoreServices -framework AudioToolbox -framework CoreAudio -framework AudioUnit 
-LCFLAGS = -Wall -pedantic 
+LCFLAGS = -m32 -W -Wall -pedantic
 SPC_IMPL = SNEeSe
 SPCIMPL_OBJS = SNEeSe/SPC700.o SNEeSe/SPCimpl.o
 LIB_OBJS = main.o dsp.o $(SPCIMPL_OBJS)
@@ -28,7 +28,7 @@ linux: SPCPLAYERFILE = spcplayerlinux.c
 linux: spcplayer
 
 spcplayer: libopenspc.a $(SPCPLAYERFILE)
-	gcc $(CFLAGS) $(SPCPLAYERFILE) -o spcplayer -lz ./libopenspc.a
+	$(CC) $(CFLAGS) $(SPCPLAYERFILE) -o spcplayer libopenspc.a -lz
 
 
 #install: libopenspc.so openspc.h
